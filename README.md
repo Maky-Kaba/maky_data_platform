@@ -2,17 +2,18 @@
 
 This project is a hands-on journey through the core concepts of modern data engineering and IoT solutions, based on the "Data platforms, data integration and cloud solutions" course. 
 
-It's a practical exploration of how to build a system that fetches data from an external source, processes it, stores it, and presents it through a web interface. It serves as a living document and a portfolio piece demonstrating key skills in the field.
+It's a practical exploration of how to build a system that fetches data from an external source, processes it, stores it across multiple database types, and integrates with cloud storage. It serves as a living document and a portfolio piece demonstrating key skills in the field.
 
 ## ✨ Features
 
-*   **Data Fetching:** A Python script that connects to the Futurama API to pull character data.
-*   **Database Storage:** Saves the retrieved data into a MongoDB database. <!-- UPDATED -->
-*   **Web Interface:** A simple but effective web front-end built with Flask that dynamically reads the stored data and displays it in the browser.
+*   **Data Fetching:** Connects to the Futurama API to pull character data.
+*   **Multi-Database Storage:** Persists the fetched data in both a NoSQL (MongoDB) and a SQL (MySQL) database.
+*   **Cloud Integration:** Uploads a sample IoT sensor data file to a real cloud object store (Amazon S3).
+*   **Web Interface:** A simple Flask web app to display data from the MongoDB database.
 
 ## 🚀 Getting Started
 
-To get this project running on your own machine (or in a fresh Cloud Shell environment), follow these steps:
+To get this project running, you will need an AWS account and your credentials configured.
 
 1.  **Clone the repository:**
     ```bash
@@ -20,40 +21,39 @@ To get this project running on your own machine (or in a fresh Cloud Shell envir
     cd maky_data_platform
     ```
 
-2.  **Launch the database:** <!-- NEW STEP -->
+2.  **Launch the database services:** This starts the MongoDB and MySQL containers.
     ```bash
     docker-compose up -d
     ```
 
 3.  **Set up the Python environment:**
     ```bash
-    python3 -m venv venv
+    python3 -m venv ven
     source venv/bin/activate
     ```
 
-4.  **Install the necessary dependencies:**
+4.  **Install dependencies:**
     ```bash
     uv pip install -r requirements.txt
     ```
 
-5.  **Run the data pipeline:** This fetches data from the API and populates the MongoDB database.
+5.  **Configure AWS Credentials:**
+    ```bash
+    aws configure
+    ```
+    *(You will need your AWS Access Key ID and Secret Access Key for this step.)*
+
+6.  **Run the full data pipeline:** This fetches API data, saves it to the databases, and uploads the sensor file to S3.
     ```bash
     python main.py
     ```
-
-6.  **Launch the web application:**
-    ```bash
-    python web_app.py
-    ```
-    You can then view the application by navigating to `http://localhost:8080` in your browser.
+    *(Note: You must update the `bucket_name` variable in `main.py` to your own S3 bucket name for the upload to succeed.)*
 
 ## 🛠️ Technology Stack
 
-*   Python 3
-*   Docker & Docker Compose <!-- NEW -->
-*   MongoDB (as the primary database) <!-- NEW -->
-*   Flask (for the web interface)
-*   Requests (for API communication)
-*   uv (as a modern package manager)
-*   Git & GitHub (for version control)
-*   Google Cloud Shell (as the development environment)
+*   **Cloud:** Amazon Web Services (AWS) - S3
+*   **Databases:** MongoDB, MySQL
+*   **Containerization:** Docker & Docker Compose
+*   **Backend:** Python 3, Flask
+*   **Python Libraries:** requests, pymongo, mysql-connector-python, boto3
+*   **Tooling:** uv, Git, GitHub, Google Cloud Shell
